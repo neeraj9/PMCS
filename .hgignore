@@ -1,2 +1,5 @@
 \.suo$
+\bin$
+\obj$
 \.DS_Store
+\_ReSharper
