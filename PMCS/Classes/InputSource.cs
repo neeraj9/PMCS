@@ -327,8 +327,9 @@ namespace PMCS.Classes
             string[] fileEntries = Directory.GetFiles(SourcePath);
             foreach (string fileName in fileEntries)
             {
-                if (fileName.EndsWith(".cs") == true)
+                if ((fileName.EndsWith(".cs")) && (!Path.GetFileName(fileName).StartsWith("._")))
                 {
+                    Console.WriteLine(fileName);
                     p.ReadFromFile(fileName);
                     progressBar.Value++;
 
