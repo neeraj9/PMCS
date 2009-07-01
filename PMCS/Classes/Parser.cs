@@ -523,6 +523,22 @@ namespace PMCS.Classes
                 parseLine.Remove(0, parseLine.ToString().IndexOf(";") + 1);
             }
         }
+        public int indexOfClassKeyword(int index, string keyword)
+        {
+            index = indexOfKeyword(index, keyword);
+            if (index != -1)
+            {
+                // check that class is not used in a generics qualifier
+                int i = index;
+                do
+                {
+                    i -= 1;
+                } while ((i >= 0) && (parseLine.ToString()[i] == ' '));
+                if (parseLine.ToString()[i] == ':')
+                    return -1;
+            }
+            return index;
+        }
         public int indexOfKeyword(int index, string keyword)
         {
             char c;
@@ -590,7 +606,7 @@ namespace PMCS.Classes
             {
                 int indexOfUsing = indexOfKeyword(parseLine.ToString().IndexOf("using"), "using");
                 int indexOfNamespace = indexOfKeyword(parseLine.ToString().IndexOf("namespace"), "namespace");
-                int indexOfClass = indexOfKeyword(parseLine.ToString().IndexOf("class"), "class");
+                int indexOfClass = indexOfClassKeyword(parseLine.ToString().IndexOf("class"), "class");
                 int indexOfInterface = indexOfKeyword(parseLine.ToString().IndexOf("interface"), "interface");
                 int indexOfStuct = indexOfKeyword(parseLine.ToString().IndexOf("struct"), "struct");
                 int indexOfEnum = indexOfKeyword(parseLine.ToString().IndexOf("enum"), "enum");
