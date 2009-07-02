@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{759EF292-E561-49EB-A53E-B6809E94031A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -113,38 +113,24 @@
     <None Include="Resources\TreeLeaf.png" />
     <None Include="Resources\TreeCode.png" />
     <None Include="Resources\ShowTree.png" />
-    <None Include="Resources\ShowTree16.png" />
-    <None Include="Resources\SettingImg.png" />
     <None Include="Resources\Setting16.png" />
-    <None Include="Resources\SaveImg.png" />
     <None Include="Resources\save16.png" />
-    <None Include="Resources\Prop33.png" />
     <None Include="Resources\Prop16.png" />
-    <None Include="Resources\print16.png" />
     <None Include="Resources\open16.png" />
     <None Include="Resources\Method16.png" />
-    <None Include="Resources\MainExpand13.png" />
-    <None Include="Resources\MainCollapse13.png" />
     <None Include="Resources\Interfaces16.png" />
     <None Include="Resources\HideTree.png" />
-    <None Include="Resources\HideTree16.png" />
-    <None Include="Resources\help16.gif" />
     <None Include="Resources\Fields16.png" />
-    <None Include="Resources\Expand9.png" />
     <None Include="Resources\Exit16.png" />
     <None Include="Resources\Events16.png" />
-    <None Include="Resources\edging.png" />
     <None Include="Resources\Draw16.png" />
     <None Include="Resources\Constructors16.png" />
-    <None Include="Resources\Collapse9.png" />
-    <None Include="Resources\BannerImg.png" />
     <None Include="Resources\AboutImg.png" />
     <None Include="Resources\about16.png" />
     <None Include="Resources\View16.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="np.ico" />
-    <Content Include="Resources\Ermira.JPG" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
