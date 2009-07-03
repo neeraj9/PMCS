@@ -42,9 +42,9 @@ namespace PMCS
             this.progressBar.Value = 0;
             this.progressBar.Visible = true;
 
-            if ((fbd.SelectedPath != null) && (fbd.SelectedPath != ""))
+            if (!string.IsNullOrEmpty(fbd.SelectedPath))
             {
-                inputSource.ReadProject(fbd.SelectedPath, this.progressBar);
+                inputSource.ReadProject(fbd.SelectedPath, x => progressBar.Value++);
                 PopulateText();
                 PopulateTree();
             }
@@ -382,83 +382,7 @@ namespace PMCS
             if (sfd.FileName != "")
             {
                 StreamWriter SW = new StreamWriter(sfd.FileName);//this.textBox2.Text + "//test.mse");
-                StringBuilder line = new StringBuilder();
-
-                //fmN = inputSource.ListOfNamespaces;
-                line.AppendLine("(Moose.Model (id: 1)");
-                line.AppendLine("\t(name 'PMC#')");
-                line.AppendLine("\t(entity");
-                for (int i = 0; i < fmN.Count; i++)
-                {
-                    line.AppendLine("\t\t(FAMIX.Package (id: " + fmN[i].NId + ")");
-                    line.AppendLine("\t\t\t(name '" + fmN[i].NName + "'))");
-                    if (fmN[i].NPackagedIn > 1)
-                    {
-                        line.AppendLine("\t\t\t(packagedIn (idref: " + fmN[i].NPackagedIn + "))");
-                    }
-
-                    for (int k = 0; k < fmN[i].NClasses.Count; k++)
-                    {
-                        line.AppendLine("\t\t(FAMIX.Class (id: " + fmN[i].NClasses[k].CId + ")");
-                        line.AppendLine("\t\t\t(name '" + fmN[i].NClasses[k].CName + "')");
-                        line.AppendLine("\t\t\t(packagedIn (idref: " + fmN[i].NId + "))");
-                        if (fmN[i].NClasses[k].CIsAbstract == true)
-                        {
-                            line.AppendLine("\t\t\t(isAbstract true))");
-                        }
-                        else
-                        {
-                            line.AppendLine("\t\t\t(isAbstract false))");
-                        }
-                        for (int x = 0; x < fmN[i].NClasses[k].CMethods.Count; x++)
-                        {
-                            line.AppendLine("\t\t(FAMIX.Method (id: " + fmN[i].NClasses[k].CMethods[x].MId + ")");
-                            line.AppendLine("\t\t\t(name '" + fmN[i].NClasses[k].CMethods[x].MName + "')");
-                            line.AppendLine("\t\t\t(accessControlQualifier '" + fmN[i].NClasses[k].CMethods[x].mMccessControlQualifier + "')");
-                            line.AppendLine("\t\t\t(belongsTo (idref: " + fmN[i].NClasses[k].CId + "))");
-                            line.AppendLine("\t\t\t(LOC " + fmN[i].NClasses[k].CMethods[x].Loc + ")");
-                            line.AppendLine("\t\t\t(packagedIn (idref: " + fmN[i].NId + "))");
-                            line.AppendLine("\t\t\t(signature '" + fmN[i].NClasses[k].CMethods[x].MSignature + "'))");
-
-                        }
-                        for (int n = 0; n < fmN[i].NClasses[k].cCFields.Count; n++)
-                        {
-                            line.AppendLine("\t\t(FAMIX.Attribute (id: " + fmN[i].NClasses[k].cCFields[n].FID + ")");
-                            line.AppendLine("\t\t\t(name '" + fmN[i].NClasses[k].cCFields[n].FName + "')");
-                            if (fmN[i].NClasses[k].cCFields[n].FAccessControlQualifier != "")
-                            {
-                                line.AppendLine("\t\t\t(accessControlQualifier '" + fmN[i].NClasses[k].cCFields[n].FAccessControlQualifier + "')");
-                            }
-                            line.AppendLine("\t\t\t(belongsTo (idref: " + fmN[i].NClasses[k].CId + ")))");
-                        }
-                    }
-                    for (int x = 0; x < fmN[i].FInheritance.Count; x++)
-                    {
-                        line.AppendLine("(FAMIX.InheritanceDefinition (id: " + fmN[i].FInheritance[x].IId + ")");
-                        line.AppendLine("\t\t\t(stub false)");
-                        line.AppendLine("\t\t\t(subclass (idref: " + fmN[i].FInheritance[x].SubClass + "))");
-                        line.AppendLine("\t\t\t(superclass (idref: " + fmN[i].FInheritance[x].SuperClass + ")))");
-                    }
-                    for (int xx = 0; xx < fmN[i].FInvoc.Count; xx++)
-                    {
-                        line.AppendLine("(FAMIX.Invocation (id: " + fmN[i].FInvoc[xx].FID + ")");
-                        line.AppendLine("\t\t\t(candidate (idref: " + fmN[i].FInvoc[xx].FCandidate + "))");
-                        line.AppendLine("\t\t\t(invokedBy (idref: " + fmN[i].FInvoc[xx].FInvokedBy + "))");
-                        line.AppendLine("\t\t\t(invokes '" + fmN[i].FInvoc[xx].FName + "')");
-                        line.AppendLine("\t\t\t(stub false))");
-                    }
-                    for (int xxx = 0; xxx < fmN[i].FAccess.Count; xxx++)
-                    {
-                        line.AppendLine("(FAMIX.Access (id: " + fmN[i].FAccess[xxx].AID + ")");
-                        line.AppendLine("\t\t\t(accessedIn (idref: " + fmN[i].FAccess[xxx].ABelongsTo + "))");
-                        line.AppendLine("\t\t\t(accesses (idref: " + fmN[i].FAccess[xxx].AAccesses + "))");
-                        line.AppendLine("\t\t\t(stub false))");
-                    }
-                }
-                line.Remove(line.Length - 2, 1);
-                line.AppendLine(")");
-                line.AppendLine("(sourceLanguage 'C#'))");
-                SW.Write(line.ToString());
+                new MseOutput().WriteMse(fmN, SW);
                 SW.Close();
                 MessageBox.Show("The file " + sfd.FileName + " is created");
             }

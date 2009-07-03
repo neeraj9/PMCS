@@ -602,8 +602,9 @@ namespace PMCS.Classes
         }
         public void ProcessLine()
         {
-            if (parseLine.ToString().Trim() != "")
+            while (parseLine.ToString().Trim() != "")
             {
+                Console.WriteLine(String.Format("   {0}", parseLine.Length));
                 int indexOfUsing = indexOfKeyword(parseLine.ToString().IndexOf("using"), "using");
                 int indexOfNamespace = indexOfKeyword(parseLine.ToString().IndexOf("namespace"), "namespace");
                 int indexOfClass = indexOfClassKeyword(parseLine.ToString().IndexOf("class"), "class");
@@ -746,7 +747,6 @@ namespace PMCS.Classes
                         }
                     }
                 }
-                ProcessLine();
             }
         }
         public void ReadFromFile(string filename)

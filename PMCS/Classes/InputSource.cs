@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Linq;
 
 namespace PMCS.Classes
 {
@@ -320,7 +321,7 @@ namespace PMCS.Classes
             }
         }
         
-        public void ReadFilesOfProject(string path, System.Windows.Forms.ToolStripProgressBar progressBar)
+        public void ReadFilesOfProject(string path, Action<string> progressAction)
         {
             sourcePath = path;
             //an array which will get files from the specified source, and it will read only .cs files
@@ -329,10 +330,8 @@ namespace PMCS.Classes
             {
                 if ((fileName.EndsWith(".cs")) && (!Path.GetFileName(fileName).StartsWith("._")))
                 {
-                    Console.WriteLine(fileName);
                     p.ReadFromFile(fileName);
-                    progressBar.Value++;
-
+                    progressAction(fileName);
                 }
             }
 
@@ -340,10 +339,10 @@ namespace PMCS.Classes
             string[] subdirEntries = Directory.GetDirectories(SourcePath);
             foreach (string subdir in subdirEntries) //lexohen edhe nefolderat
             {
-                ReadFilesOfProject(subdir, progressBar);
+                ReadFilesOfProject(subdir, progressAction);
             }
         }
-        public void ReadProject(string path, System.Windows.Forms.ToolStripProgressBar progressBar)
+        public void ReadProject(string path, Action<string> progressAction)
         {
             p = new Parser(this); 
             // e japim inputsourcin si paramter hyres se me ListOfNamspace na po perdorim gjithmon en Parse
@@ -351,7 +350,7 @@ namespace PMCS.Classes
             //sa here qe lexon file te ri aiia jep naspacit si file te ri edhe i kemi namspacat e ri 
 
 
-            ReadFilesOfProject(path, progressBar);
+            ReadFilesOfProject(path, progressAction);
             ProcessInheritance();
             ProccessInvocation();
             ProcessAccess();
