@@ -11,7 +11,7 @@ namespace PMCS.Classes
         private List<FClass> listOfClasses = new List<FClass>();
         private StreamReader SR;
         public InputSource inputSource = new InputSource();
-        public StringBuilder parseLine = new StringBuilder();
+        public CachingStringBuilder parseLine = new CachingStringBuilder();
         public List<int> statusOfNamepsace = new List<int>();
         public List<int> statusOfClass = new List<int>();
         public int startIndex;

@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\CachingStringBuilder.cs" />
     <Compile Include="Classes\FAccess.cs" />
     <Compile Include="Classes\FAttribute.cs" />
     <Compile Include="Classes\FClass.cs" />

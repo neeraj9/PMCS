@@ -330,8 +330,8 @@ namespace PMCS.Classes
             {
                 if ((fileName.EndsWith(".cs")) && (!Path.GetFileName(fileName).StartsWith("._")))
                 {
-                    p.ReadFromFile(fileName);
                     progressAction(fileName);
+                    p.ReadFromFile(fileName);
                 }
             }
 
