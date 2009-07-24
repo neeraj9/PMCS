@@ -320,6 +320,38 @@ namespace PMCS.Classes
                 }
             }
         }
+
+        public FNamespace GetNamespace(string name)
+        {
+            foreach(var n in listOfNamespaces)
+            {
+                if(n.NName == name)
+                    return n;
+            }
+            return null;
+        }
+
+
+        public void ProcessNamespaceHierarchy()
+        {
+            for(int nIdx = 0; nIdx < listOfNamespaces.Count; nIdx++) 
+            {
+                FNamespace n = listOfNamespaces[nIdx];
+                string[] parts = n.NName.Split('.');
+                if(parts.Length == 1)
+                    continue;
+                var pparts = new List<string>(parts).GetRange(0, parts.Length - 1);
+                var parentName = String.Join(".", pparts.ToArray());
+                var parent = GetNamespace(parentName);
+                if(parent == null)
+                {
+                    parent = new FNamespace {NName = parentName, NId = elementID++};
+                    listOfNamespaces.Add(parent);
+                }
+                n.ParnetNamespace = parentName;
+                n.NPackagedIn = parent.NId;
+            }
+        }
         
         public void ReadFilesOfProject(string path, Action<string> progressAction)
         {

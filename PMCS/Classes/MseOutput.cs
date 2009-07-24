@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -16,11 +17,12 @@ namespace PMCS.Classes
             for(int i = 0; i < namespaces.Count; i++)
             {
                 line.AppendLine("\t\t(FAMIX.Package (id: " + namespaces[i].NId + ")");
-                line.AppendLine("\t\t\t(name '" + namespaces[i].NName + "'))");
+                line.AppendLine("\t\t\t(name '" + namespaces[i].NName + "')");
                 if(namespaces[i].NPackagedIn > 1)
                 {
                     line.AppendLine("\t\t\t(packagedIn (idref: " + namespaces[i].NPackagedIn + "))");
                 }
+                line.AppendLine("\t\t\t)");
 
                 for(int k = 0; k < namespaces[i].NClasses.Count; k++)
                 {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using PMCS.Classes;
@@ -45,7 +46,8 @@ namespace PMCS
 
             Log("Reading files");
             inputSource.ReadProject(sourcePath, x => Log("- {0}", x));
-
+            inputSource.ProcessNamespaceHierarchy();
+ 
             Log("Writing output to {0}", outputFile);
             var writer = (outputFile != null) ? new StreamWriter(outputFile) : Console.Out;
             new MseOutput().WriteMse(inputSource.ListOfNamespaces, writer);
