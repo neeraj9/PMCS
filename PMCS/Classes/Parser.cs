@@ -346,6 +346,10 @@ namespace PMCS.Classes
         public void ParseProperty()
         {
             FAttribute fAttribute = new FAttribute();
+            if (parseLine.ToString().Length < startIndex)
+            {
+                startIndex = parseLine.ToString().Length - 1;
+            }
             String[] attribute = parseLine.ToString().Substring(0, startIndex).Trim().Split(' ');
             fAttribute.AId = inputSource.ElementID;
             fAttribute.ABelongsTo = inputSource.ListOfNamespaces[statusOfNamepsace[statusOfNamepsace.Count - 1]].NClasses[statusOfClass[statusOfClass.Count - 1]].CId;

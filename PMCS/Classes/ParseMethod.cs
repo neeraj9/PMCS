@@ -152,18 +152,21 @@ namespace PMCS.Classes
                         temp = "";
                         i++;
                     }
-                    if (s[i] == ' ')
+                    if (i < s.Length)
                     {
-                        if (FindOperand(temp) == true)
+                        if (s[i] == ' ')
                         {
-                            param = param.Replace(temp, " ").Trim();
-                            ProcessString(param);
+                            if (FindOperand(temp) == true)
+                            {
+                                param = param.Replace(temp, " ").Trim();
+                                ProcessString(param);
 
+                            }
+                            temp = "";
                         }
-                        temp = "";
-                    }
-                    param += s[i];
-                    temp += s[i];
+                        param += s[i];
+                        temp += s[i];
+                    } 
                 }
             }
             if (param != "")
