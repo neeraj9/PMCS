@@ -807,9 +807,6 @@ namespace PMCS.Classes
 
                 if ((char)SR.Peek() == '@')
                 {
-                    //munen stringjet me kon string s = @"C:\fisne" per mos me e bo sring s = "C:\\fisne"
-                    parseLine.Append(" ");
-                    c =  (char)SR.Read();
                     insideAtString = true;
                 }
 
