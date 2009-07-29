@@ -756,7 +756,7 @@ namespace PMCS.Classes
         {
             parseLine.Remove(0, parseLine.Length);
             SR = File.OpenText(filename);
-            bool etStatus = false;
+            bool insideAtString = false;
             char c;
             while (SR.Peek() > -1)
             {
@@ -776,22 +776,25 @@ namespace PMCS.Classes
                 if (c == '"')
                 {
                     parseLine.Append(c);
-                    while ((char)SR.Peek() != '"')
+                    if(insideAtString)
                     {
-                        if ((char)SR.Read() == '\\')
+                        char c2, peek = ' ';
+                        while((c2 = (char)SR.Read()) != '"' || (peek = (char)SR.Peek()) == '"')
                         {
-                            if ((etStatus == true) && ((char)SR.Peek() == '"'))
-                            {
-
-                            }
-                            else
-                            {
+                            if (c2 == '"' && peek == '"')
                                 SR.Read();
-                            }
+                        }
+                    }
+                    else
+                    {
+                        while ((char)SR.Peek() != '"')
+                        {
+                            if ((char)SR.Read() == '\\')
+                                SR.Read();
                         }
                     }
                     c = (char)SR.Read();
-                    etStatus = false;
+                    insideAtString = false;
                 }
                 if ((c == '/') && ((char)SR.Peek() == '/'))
                 {
@@ -805,10 +808,9 @@ namespace PMCS.Classes
                 if ((char)SR.Peek() == '@')
                 {
                     //munen stringjet me kon string s = @"C:\fisne" per mos me e bo sring s = "C:\\fisne"
-
                     parseLine.Append(" ");
                     c =  (char)SR.Read();
-                    etStatus = true;
+                    insideAtString = true;
                 }
 
                 if ((c == '/') && ((char)SR.Peek() == '*'))

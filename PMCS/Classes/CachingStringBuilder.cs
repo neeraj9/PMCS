@@ -10,7 +10,7 @@ namespace PMCS.Classes
 
         public CachingStringBuilder()
         {
-            builder = new StringBuilder();
+            builder = new StringBuilder(200000);
         }
 
         public int Length
